@@ -77,7 +77,7 @@ router.patch('/user/:id',(req, res, next) => {
     var id_exp = /\w{10,}/g
     var id = req.url.match(id_exp)[0];
     var datos = req.body;
-    var arr = ["name", "lastname", "password", "email"];
+    var arr = ["name", "lastname", "password"];
     var updatedata = {};
     var keys = Object.keys(datos);
     arr.map((item)=>{
@@ -86,8 +86,11 @@ router.patch('/user/:id',(req, res, next) => {
         }
     });
     console.log(updatedata);
-    res.status(500).json({
-        "msn" : "actualizad"
+    USER.update({_id: id}, {$set: updatedata}).exec((err,docs) => {
+        console.log(docs);
+        res.status(200).json({
+            "msn" : "actualizad patch"
+        });
     });
 });
 module.exports = router;
