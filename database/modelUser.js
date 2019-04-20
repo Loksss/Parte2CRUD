@@ -3,9 +3,12 @@ const mongoose = require("./connect");
 var userSchema = {
     name: String,
     lastname: String,
-    registerDate: Date,
+    address: String,
+    age: Number,
+    nickname: String,
     password: String,
-    email: String
+    registerDate: Date,
+    updateDate: Date
 }
 var USER = mongoose.model("user", userSchema);
 module.exports = USER;

@@ -9,11 +9,14 @@ router.post('/user', function(req, res, next) {
     var userdata = {
         name: data.name,
         lastname: data.lastname,
+        address: data.address,
+        age: data.age,
+        nickname: data.nickname,
         password: sha1(params.password),
-        registerDate: new Date(),
-        email: data.email
+        registerDate: new Date()
     };
     var user = new USER(userdata);
+    console.log(req.url);
     user.save().then((docs) => {
         if(docs) {
             res.status(200).json({
@@ -47,8 +50,11 @@ router.put('/user/:id',(req, res, next) => {
     var userdata = {
         name: data.name,
         lastname: data.lastname,
+        address: data.address,
+        age: data.age,
+        nickname: data.nickname,
         password: data.password,
-        email: data.email
+        updateDate: new Date()
     };
     USER.update({_id: id}, {$set:userdata}).exec((err, docs) => {
         res.status(500).json({
