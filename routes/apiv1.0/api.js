@@ -43,6 +43,7 @@ router.get('/user', (req, res, next) => {
 });
 
 router.put('/user/:id',(req, res, next) => {
+    var params = req.body;
     var data = req.body;
     console.log(req.url);
     var id_exp = /\w{10,}/g
@@ -53,7 +54,7 @@ router.put('/user/:id',(req, res, next) => {
         address: data.address,
         age: data.age,
         nickname: data.nickname,
-        password: data.password,
+        password: sha1(params.password),
         updateDate: new Date()
     };
     USER.update({_id: id}, {$set:userdata}).exec((err, docs) => {
@@ -77,7 +78,7 @@ router.patch('/user/:id',(req, res, next) => {
     var id_exp = /\w{10,}/g
     var id = req.url.match(id_exp)[0];
     var datos = req.body;
-    var arr = ["name", "lastname", "password"];
+    var arr = ["name", "lastname", "password", "address", "age", "nickname",];
     var updatedata = {};
     var keys = Object.keys(datos);
     arr.map((item)=>{
